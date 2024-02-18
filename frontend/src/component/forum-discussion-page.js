@@ -1,11 +1,13 @@
 import React from 'react';
 import arrowBack from '../images/arrow-back.svg';
 import '../styles/forum-page.css';
+import { Navigate } from 'react-router-dom';
 
 class ForumPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			isNavigate: false,
 			limit: 0,
 			header: '',
 			answers: null
@@ -59,6 +61,7 @@ class ForumPage extends React.Component {
 		const currentUrl = window.location.href;
 		const parts = currentUrl.split('/');
 		const discussionId = parseInt(parts[parts.length - 1]);
+
 		fetch(`/api/forum/answer/${discussionId}`, {
 			method: 'POST',
 			body: formData
@@ -69,6 +72,7 @@ class ForumPage extends React.Component {
 					this.state.limit += 10;
 					this.answers();
 				}
+				if (response.status === 403) this.setState({isNavigate: true})
 			})
 			.catch((error) => {
 				console.log(error);
@@ -80,6 +84,8 @@ class ForumPage extends React.Component {
 	}
 
 	render() {
+		if (this.state.isNavigate) return <Navigate to="/auth/login" />;
+
 		const currentUrl = window.location.href;
 		const parts = currentUrl.split('/');
 		const discussionsId = parseInt(parts[parts.length - 2]);
