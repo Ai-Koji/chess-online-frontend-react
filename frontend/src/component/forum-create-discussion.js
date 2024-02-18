@@ -57,15 +57,10 @@ class CreateTopic extends React.Component {
 						}
 					});
 				} else if (response.status === 403) {
-					switch (response.statusText) {
-						case 'invalid password':
-							this.setState({
-								isNavigate: true,
-								isToReg: true
-							});
-							break;
-						default:
-					}
+					this.setState({
+						isNavigate: true,
+						isToReg: true
+					});
 				} else if (response.status === 500) {
 					this.setState({
 						status: {
@@ -79,8 +74,7 @@ class CreateTopic extends React.Component {
 			.catch((error) => {
 				this.setState({
 					status: {
-						message: `Произошла ошибка при отправке запроса, попробуйте позже 
-                        ошибка: ${error}`,
+						message: `Ошибка со стороны сервера, попробуйте позже или свяжитесь с администраторами: ${error}`,
 						statusCode: 500
 					}
 				});
@@ -88,7 +82,10 @@ class CreateTopic extends React.Component {
 	};
 
 	render() {
-		if (this.state.isNavigate) return <Navigate to="/" />;
+		let url = this.state.isToReg
+			? '/auth/login'
+			: `/forum/discussion/${this.state.forumId}`;
+		if (this.state.isNavigate) return <Navigate to={url} />;
 
 		return (
 			<div className="container">
