@@ -1,0 +1,63 @@
+.header {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 60px;
+    padding: 2%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: start;
+    background-color: rgb(45, 45, 45);
+}
+
+.header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.back {
+    width: 5%;
+}
+
+.back img {
+    width: 70%;
+}
+
+.header h1 {
+    width: 80%;
+}
+
+.create {
+    width: 10%;
+    color: #629924;
+}
+
+.list {
+    width: 100%;
+    padding: 20px;
+}
+
+thead {
+    background-color: #615f5f;
+}
+
+.subject {
+    width: 60%;
+}
+
+.count {
+    width: 10%;
+}
+
+tbody a {
+    color: rgb(42, 128, 194);
+}
+
+tbody td {
+    padding: 15px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgb(34, 34, 34);
+}

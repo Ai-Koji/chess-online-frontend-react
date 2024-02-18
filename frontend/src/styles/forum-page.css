@@ -1,0 +1,155 @@
+main .container {
+    display: block;
+}
+
+.header {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 60px;
+    margin-bottom: 10px;
+    padding: 2%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: start;
+    background-color: rgb(45, 45, 45);
+}
+
+.header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.back {
+    width: 5%;
+}
+
+.back img {
+    width: 70%;
+}
+
+.header h1 {
+    width: 90%;
+}
+
+.message {
+    text-align: left;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #fff;
+}
+
+.message-header {
+    margin-top: 10px;
+    display: inline-flex;
+}
+
+.message-main {
+    width: 95%;
+    margin: 0 auto;
+
+}
+
+.author {
+    background-color: rgba(42, 128, 194, 0.6);
+    width: 200px;
+    padding: 10px;
+    margin: 5px;
+    margin-left: 20px;
+    border-radius: 7px;
+}
+
+.time {
+    text-align: center;
+    height: 100%;
+    padding: 10px;
+    margin: 5px;
+}
+
+
+.user {
+    background-color: rgba(225, 225, 225, 0.3);
+    width: 200px;
+    padding: 10px;
+    margin: 5px;
+    margin-left: 20px;
+    border-radius: 7px;
+}
+
+textarea {
+    width: 80%;
+    height: 224px;
+    margin: 30px;
+    overflow: auto;
+    resize: vertical;
+    padding: .8em 1em;
+    unicode-bidi: plaintext;
+    font: inherit;
+    color-scheme: dark;
+}
+
+form {
+    background-color: #333;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    margin-bottom: 50px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+input[type="text"],
+textarea {
+    width: calc(100% - 16px);
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #555;
+    border: 1px solid #777;
+    color: #fff;
+    border-radius: 5px;
+    width: 90%;
+    margin-bottom: 15px;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+    border: 1px solid rgb(42, 128, 194);
+}
+
+input[type="submit"] {
+    background-color: rgb(42, 128, 194);
+    color: #fff;
+    padding: 10px 15px;
+    margin-top: 30px;
+    margin-left: 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.5s;
+}
+
+input[type="submit"]:hover {
+    background-color: #fff;
+    color: #333;
+}
+
+.show-more {
+    margin: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: rgba(42, 128, 194, 0.6);
+    color: #fff;
+    transition: all 0.5s;
+}
+.show-more:hover {
+    background-color: #fff;
+    color: #333;
+}

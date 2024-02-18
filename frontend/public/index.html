@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+            name="description"
+            content="Web site created using create-react-app"
+        />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <title>React App</title>
+    </head>
+
+    <body>
+        <header>
+            <div class="container">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo" />
+                </div>
+                <nav>
+                    <ul class="left">
+                        <li><a href="/board">Доска</a></li>
+                        <li><a href="/debut-base">База дебютов</a></li>
+                        <li><a href="/forum">Форум</a></li>
+                    </ul>
+                    <ul class="right">
+                        <li><a href="/auth/login" id="UserAccount">Войти</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main id="root">
+            <noscript>You need to enable JavaScript to run this app.</noscript>
+        </main>
+    </body>
+</html>
+<script>
+  fetch('/api/auth/islogin')
+      .then((response) => {
+          if (response.status == 200) return response.json();
+          else return null;
+      })
+      .then((response) => {
+          if (response) {
+              let login = response.login;
+              let userA = document.querySelector('#UserAccount');
+              userA.href = '/api/auth/logout';
+              userA.textContent = login;
+          }
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+</script>
