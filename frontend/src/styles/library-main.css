@@ -1,0 +1,84 @@
+.header {
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 0px;
+	margin-top: 60px;
+	padding: 2%;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-between;
+	background-color: rgb(45, 45, 45);
+}
+
+.search-input {
+	padding: 10px;
+	font-size: 16px;
+	color: #fff;
+	background-color: #333;
+	border: 1px solid #615f5f;
+	border-radius: 5px;
+	outline: none;
+	transition: all 0.5s ease-in-out;
+}
+
+.content {
+	width: 98%;
+	margin: 0 auto;
+	margin-top: 30px;
+	background-color: #333;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.content-block {
+	padding: 1.5%;
+	width: 95%;
+	background-color: rgb(102, 102, 102);
+	border-radius: 20px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+.books {
+    text-align: center;
+}
+
+.book {
+	width: 125px;
+	padding: 10px;
+	border-radius: 10px;
+	margin: 10px;
+	display: inline-block;
+	background-color: rgb(189, 189, 189);
+	color: rgb(34, 34, 34);
+	transition: all 0.25s ease-in-out;
+    text-align: left;
+}
+
+.book img {
+	width: 100%;
+}
+
+.book:hover {
+	color: rgb(255, 93, 34);
+	background-color: rgb(233, 233, 233);
+	transform: scale(1.05);
+}
+
+.showMore {
+    padding: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #ff8c28;
+    cursor: pointer;
+    font-size: 10pt;
+    transition: all 0.25s ease-in-out;
+}
+
+.showMore:hover {
+    transform: scale(1.1);
+    background-color: #ffb370;
+}

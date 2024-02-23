@@ -15,6 +15,8 @@ const ForumPage = lazy(() => import("./component/forum-discussion-page"));
 const Login = lazy(() => import("./component/login"));
 const Reg = lazy(() => import("./component/reg"));
 const CreateTopic = lazy(() => import("./component/forum-create-discussion"));
+const Library = lazy(() => import("./component/library"));
+const Book = lazy(() => import("./component/book"));
 
 const App = () => (
   <Routes>
@@ -25,6 +27,8 @@ const App = () => (
     <Route path="/forum" element={<Forum />} /> {}
     <Route path="/forum/discussions/*" element={<ForumDiscussions />} /> {}
     <Route path="/forum/discussion/*" element={<ForumPage />} /> {}
+    <Route path="/library" element={<Library />} /> {}
+    <Route path="/library/book/*" element={<Book />} /> {}
     <Route path="/forum/forum-create-discussion/*" element={<CreateTopic />} /> {}
     <Route path="/auth/login" element={<Login />} /> {}
     <Route path="/auth/registration" element={<Reg />} /> {}
