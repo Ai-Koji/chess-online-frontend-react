@@ -1,0 +1,81 @@
+.content {
+	display: flex;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+p {
+    text-indent: 3ch;
+	margin-bottom: 40px;
+}
+
+.image {
+	width: 30%;
+}
+
+.image img {
+	width: 80%;
+}
+
+.about-book {
+	width: 70%;
+	margin-left: 30px;
+}
+
+.about-book h1 {
+	margin-bottom: 10px;
+}
+
+.about-book h3 {
+	margin-bottom: 10px;
+}
+
+.author {
+	color: rgb(208, 82, 18);
+	margin-bottom: 30px;
+}
+
+.read-pdf {
+	background-color: rgb(208, 82, 18);
+	padding: 10px;
+}
+
+.cant-read {
+    background-color: rgb(98, 98, 98);
+    cursor: default;
+}
+
+.where-to-buy {
+    margin-top: 30px;
+}
+
+.where-to-buy a {
+    color: rgb(0, 170, 255);
+    font-size: 11pt;
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 767px) {
+	.content {
+		display: block;
+	}
+	.image {
+		width: 90%;
+		text-align: center;
+		margin: 0 auto;
+		margin-bottom: 20px;
+	}
+	.image img {
+		width: 300px;
+	}
+
+	.about-book {
+		width: 90%;
+		margin: 0;
+	}
+
+	h1,
+	h6 {
+		text-align: center;
+	}
+}
