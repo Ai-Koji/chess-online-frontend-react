@@ -52,7 +52,9 @@ p {
 .where-to-buy a {
     color: rgb(0, 170, 255);
     font-size: 11pt;
+	display: block;
     margin-left: 20px;
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 767px) {
