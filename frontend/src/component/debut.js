@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/debut.css';
+import '../styles/chessboard.css';
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import arrowPrev from '../images/skip-prev1.svg';
