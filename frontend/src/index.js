@@ -17,10 +17,14 @@ const Reg = lazy(() => import("./component/reg"));
 const CreateTopic = lazy(() => import("./component/forum-create-discussion"));
 const Library = lazy(() => import("./component/library"));
 const Book = lazy(() => import("./component/book"));
+const Lessons = lazy(() => import("./component/lessons"));
+const Lesson = lazy(() => import("./component/lesson"));
 
 const App = () => (
   <Routes>
     <Route path="/board" element={<Board />} /> {}
+    <Route path="/beginner-lessons" element={<Lessons />} /> {}
+    <Route path="/beginner-lessons/lesson/*" element={<Lesson />} /> {}
     <Route path="/debut-base" element={<DebutBase />} /> {}
     <Route path="/debut-base/debut" element={<Debut />} /> {}
     <Route path="/begin-base" element={<BeginBase />} /> {}
