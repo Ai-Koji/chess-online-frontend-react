@@ -147,8 +147,19 @@ move:hover {
 .other-moves .other-moves {
     border: none;
     padding-left: 5%;
+    margin-top: 0;
+    padding-top: 0;
     width: 90%;
     background:none;
+}
+
+.other-moves p {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.other-moves * {
+    display: inline-block;
 }
 
 .description {
