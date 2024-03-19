@@ -28,7 +28,7 @@
   }
 
 .card {
-    width: 400px;
+    width: 350px;
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
@@ -46,10 +46,13 @@
     width: 80%;
     display: block;
     margin: 0;
-    
     padding: 10px;
-
 }
+
+.card .without_image {
+    width: 100%;
+}
+
 
 .card h3 {
     margin-bottom: 10px;
