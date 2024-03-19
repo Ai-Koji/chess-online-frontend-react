@@ -41,7 +41,7 @@ class Lessons extends React.Component {
 
 	getInfo = () => {
 		let body = [];
-		fetch('http://127.0.0.1:3000/api/lessons/main')
+		fetch('/api/lessons/main')
 			.then((response) => response.json())
 			.then((result) => {
 				let blocks = [];

@@ -49,7 +49,7 @@ class Lesson extends React.Component {
 		const currentUrl = window.location.href;
 		const parts = currentUrl.split('/');
 		const lastNumber = parseInt(parts[parts.length - 1]);
-		fetch(`http://127.0.0.1:3000/api/lessons/lesson/${lastNumber}`)
+		fetch(`/api/lessons/lesson/${lastNumber}`)
 			.then((response) => response.json())
 			.then((result) => {
 				this.setState({info: {
