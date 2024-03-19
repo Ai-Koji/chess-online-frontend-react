@@ -3,47 +3,64 @@ import '../styles/chessboard.css';
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 
+// JsonDescription - содержание партии справа
+// пример JsonDescription:
+	// {
+	// 	type: 'description',
+	// 	content: [
+	// 		{ type: 'text', content: 'just text' },
+	// 		{ type: 'text', content: 'just text2' }
+	// 	]
+	// },
+	// {
+	// 	type: 'main-moves',
+	// 	content: [{
+	// 		type: 'tr',
+	// 		content: [
+	// 			{ type: 'index', content: '1.' },
+	// 			{ type: 'move', fen: 'r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 1 6', content: 'e4' },
+	// 			{ type: 'move', fen: '', content: 'e4' },
+	// 		]
+	// 	}]
+	// },
+	// {
+	// 	type: 'other-moves',
+	// 	content: [
+	// 		{ type: 'index', content: '1.' },
+	// 		{ type: 'move', fen: '', content: 'e4' },
+	// 		{ type: 'move', fen: '', content: 'e4' },
+	// 	]
+	// }
+
 class Lesson extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			fen: '',
 			info: {
-				JSonDescription: [
-					{
-						type: 'description',
-						content: [
-							{ type: 'text', content: 'just text' },
-							{ type: 'text', content: 'just text2' }
-						]
-					},
-					{
-						type: 'main-moves',
-						content: [{
-							type: 'tr',
-							content: [
-								{ type: 'index', content: '1.' },
-								{ type: 'move', fen: '', content: 'e4' },
-								{ type: 'move', fen: '', content: 'e4' },
-							]
-						}]
-					},
-					{
-						type: 'other-moves',
-						content: [
-							{ type: 'index', content: '1.' },
-							{ type: 'move', fen: '', content: 'e4' },
-							{ type: 'move', fen: '', content: 'e4' },
-						]
-					}
-				]
+				header: null,
+				JsonDescription: []
 			}
 		};
 	}
 
 	getInfo = () => {
-		// получает все значения от сервера
-	}
+		let body = [];
+		const currentUrl = window.location.href;
+		const parts = currentUrl.split('/');
+		const lastNumber = parseInt(parts[parts.length - 1]);
+		fetch(`http://127.0.0.1:3000/api/lessons/lesson/${lastNumber}`)
+			.then((response) => response.json())
+			.then((result) => {
+				this.setState({info: {
+					JsonDescription: JSON.parse(result[0].game),
+					header:  result[0].header
+				}});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	fromJsonToJSX = (JSon) => {
 		let body = [];
@@ -97,17 +114,21 @@ class Lesson extends React.Component {
 
 	// получаем json информации об партии, переводим в jsx, возвращаем.
 	Description = () => {
-		return this.fromJsonToJSX(this.state.info.JSonDescription);
+		return this.fromJsonToJSX(this.state.info.JsonDescription);
 	};
 
 	loadPoss = (fen) => {
 		this.setState({ fen: fen });
 	};
 
+	componentDidMount() {
+		this.getInfo();
+	}
+
 	render() {
 		return (
 			<div className="container" style={{ display: 'block' }}>
-				<h1>Итальянска партия</h1>
+				<h1>{this.state.info.header}</h1>
 				<div className="grid-container">
 					<section className="board chessboard">
 						<Chessboard position={this.state.fen} />
