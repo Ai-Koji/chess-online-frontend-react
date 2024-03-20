@@ -15,7 +15,7 @@ class Book extends React.Component {
 	}
 
 	getBookInfo = () => {
-		fetch(`http://127.0.0.1:3001/api/library/book/${this.state.bookId}`, {
+		fetch(`/api/library/book/${this.state.bookId}`, {
 			method: 'GET'
 		})
 			.then((response) => response.json())
