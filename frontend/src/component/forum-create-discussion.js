@@ -90,9 +90,9 @@ class CreateTopic extends React.Component {
 		return (
 			<div className="container">
 				<div className="header">
-					<button className="back">
+					<a href={`/forum/${this.forumId}`} className="back">
 						<img src={arrowBack} />
-					</button>
+					</a>
 					<h1>General Chess Discussion</h1>
 				</div>
 				<hr />

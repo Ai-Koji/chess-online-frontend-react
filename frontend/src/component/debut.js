@@ -36,14 +36,7 @@ class Debut extends React.Component {
 		this.startIndex = [0];
 		this.endIndex = [1, 0];
 
-		this.fenList = [
-			'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1',
-			[
-				'rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
-				'rnbqkbnr/pppp1ppp/8/4p3/4PP2/8/PPPP2PP/RNBQKBNR b KQkq - 0 2',
-				'rnbqkbnr/pppp2pp/8/4pp2/4PP2/8/PPPP2PP/RNBQKBNR w KQkq - 0 3'
-			]
-		];
+		this.fenList = [];
 
 		this.altenativesMoves = [];
 		this.altenativesMovesIndex = [];

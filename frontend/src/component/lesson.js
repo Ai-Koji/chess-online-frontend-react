@@ -45,7 +45,6 @@ class Lesson extends React.Component {
 	}
 
 	getInfo = () => {
-		let body = [];
 		const currentUrl = window.location.href;
 		const parts = currentUrl.split('/');
 		const lastNumber = parseInt(parts[parts.length - 1]);
