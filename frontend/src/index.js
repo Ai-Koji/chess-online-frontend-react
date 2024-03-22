@@ -25,7 +25,7 @@ const App = () => (
     <Route path="/beginner-lessons" element={<Lessons />} /> {}
     <Route path="/beginner-lessons/lesson/*" element={<Lesson />} /> {}
     <Route path="/debuts" element={<DebutBase />} /> {}
-    <Route path="/debuts/debut" element={<Debut />} /> {}
+    <Route path="/debuts/debut/*" element={<Debut />} /> {}
     <Route path="/forum" element={<Forum />} /> {}
     <Route path="/forum/discussions/*" element={<ForumDiscussions />} /> {}
     <Route path="/forum/discussion/*" element={<ForumPage />} /> {}
