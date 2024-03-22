@@ -6,9 +6,8 @@ import "./styles/main.css";
 
 
 const Board = lazy(() => import("./component/board"));
-const DebutBase = lazy(() => import("./component/debut-base"));
+const DebutBase = lazy(() => import("./component/debuts"));
 const Debut = lazy(() => import("./component/debut"));
-const BeginBase = lazy(() => import("./component/begin-base"));
 const Forum = lazy(() => import("./component/forum"));
 const ForumDiscussions = lazy(() => import("./component/forum-discussions"));
 const ForumPage = lazy(() => import("./component/forum-discussion-page"));
@@ -25,9 +24,8 @@ const App = () => (
     <Route path="/board" element={<Board />} /> {}
     <Route path="/beginner-lessons" element={<Lessons />} /> {}
     <Route path="/beginner-lessons/lesson/*" element={<Lesson />} /> {}
-    <Route path="/debut-base" element={<DebutBase />} /> {}
-    <Route path="/debut-base/debut" element={<Debut />} /> {}
-    <Route path="/begin-base" element={<BeginBase />} /> {}
+    <Route path="/debuts" element={<DebutBase />} /> {}
+    <Route path="/debuts/debut" element={<Debut />} /> {}
     <Route path="/forum" element={<Forum />} /> {}
     <Route path="/forum/discussions/*" element={<ForumDiscussions />} /> {}
     <Route path="/forum/discussion/*" element={<ForumPage />} /> {}
