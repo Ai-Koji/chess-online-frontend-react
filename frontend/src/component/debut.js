@@ -34,8 +34,10 @@ import { Chessboard } from 'react-chessboard';
 class Lesson extends React.Component {
 	constructor(props) {
 		super(props);
+		const parts = window.location.href.split('/');
 		this.state = {
 			info: {
+				debutId: parseInt(parts[parts.length - 1]),
 				header: null,
 				JsonDescription: []
 			}
@@ -43,10 +45,7 @@ class Lesson extends React.Component {
 	}
 
 	getInfo = () => {
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const lastNumber = parseInt(parts[parts.length - 1]);
-		fetch(`/api/debuts/debut/${lastNumber}`)
+		fetch(`/api/debuts/debut/${this.state.debutId}`)
 			.then((response) => response.json())
 			.then((result) => {
 				this.setState({info: {

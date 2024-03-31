@@ -3,14 +3,12 @@ import '../styles/library-book.css';
 
 class Book extends React.Component {
 	constructor(props) {
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const bookId = parseInt(parts[parts.length - 1]);
+		const parts = window.location.href.split('/');
 
 		super(props);
 		this.state = {
 			bookInfo: {},
-			bookId: bookId
+			bookId: parseInt(parts[parts.length - 1])
 		};
 	}
 

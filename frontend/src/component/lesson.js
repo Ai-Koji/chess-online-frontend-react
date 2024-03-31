@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/chessboard.css';
 import { Chessboard } from 'react-chessboard';
-import { Chess } from 'chess.js';
 
 // JsonDescription - содержание партии справа
 // пример JsonDescription:
@@ -35,9 +34,10 @@ import { Chess } from 'chess.js';
 class Lesson extends React.Component {
 	constructor(props) {
 		super(props);
+		const parts = window.location.href.split('/');
 		this.state = {
-			fen: '',
 			info: {
+				lessonId: parseInt(parts[parts.length - 1]),
 				header: null,
 				JsonDescription: []
 			}
@@ -45,10 +45,7 @@ class Lesson extends React.Component {
 	}
 
 	getInfo = () => {
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const lastNumber = parseInt(parts[parts.length - 1]);
-		fetch(`/api/lessons/lesson/${lastNumber}`)
+		fetch(`/api/lessons/lesson/${this.state.lessonId}`)
 			.then((response) => response.json())
 			.then((result) => {
 				this.setState({info: {

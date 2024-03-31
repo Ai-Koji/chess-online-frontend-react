@@ -5,17 +5,16 @@ import arrowBack from '../images/arrow-back.svg';
 class ForumDiscussions extends React.Component {
 	constructor(props) {
 		super(props);
+		const parts = window.location.href.split('/');
 		this.state = {
+			forumId: parseInt(parts[parts.length - 1]),
 			discussions: null
 		};
 	}
 
 	GetDiscussions = () => {
 		let bodyDiscussions = [];
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const lastNumber = parseInt(parts[parts.length - 1]);
-		fetch(`/api/forum/discussions/${lastNumber}`)
+		fetch(`/api/forum/discussions/${this.state.forumId}`)
 			.then((response) => response.json())
 			.then((result) => {
 				for (let index = 0; index < result.discussions.length; index++) {
@@ -23,7 +22,7 @@ class ForumDiscussions extends React.Component {
 						<tr>
 							<td>
 								<a
-									href={`/forum/discussion/${lastNumber}/${result.discussions[index].id}`}
+									href={`/forum/discussion/${this.state.forumId}/${result.discussions[index].id}`}
 								>
 									<h3>{result.discussions[index].header}</h3>
 								</a>
@@ -45,9 +44,6 @@ class ForumDiscussions extends React.Component {
 	}
 
 	render() {
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const lastNumber = parseInt(parts[parts.length - 1]);
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">
@@ -56,7 +52,7 @@ class ForumDiscussions extends React.Component {
 					</a>
 					<h1>{this.state.header}</h1>
 					<a
-						href={`/forum/forum-create-discussion/${lastNumber}`}
+						href={`/forum/forum-create-discussion/${this.state.forumId}`}
 						className="create"
 					>
 						СОЗДАТЬ НОВУЮ ТЕМУ

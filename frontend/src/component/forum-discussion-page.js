@@ -6,7 +6,9 @@ import { Navigate } from 'react-router-dom';
 class ForumPage extends React.Component {
 	constructor(props) {
 		super(props);
+		const parts = window.location.href.split('/');
 		this.state = {
+			discussionId: parseInt(parts[parts.length - 1]),
 			isNavigate: false,
 			limit: 0,
 			header: '',
@@ -17,10 +19,7 @@ class ForumPage extends React.Component {
 	answers = () => {
 		this.state.limit += 10;
 		let bodyAnswers = [];
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const lastNumber = parseInt(parts[parts.length - 1]);
-		fetch(`/api/forum/answers/${lastNumber}/${this.state.limit}`)
+		fetch(`/api/forum/answers/${this.state.discussionId}/${this.state.limit}`)
 			.then((response) => response.json())
 			.then((result) => {
 				console.log(result);
@@ -58,11 +57,7 @@ class ForumPage extends React.Component {
 		const form = document.getElementById('form');
 		let formData = new FormData(form);
 
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const discussionId = parseInt(parts[parts.length - 1]);
-
-		fetch(`/api/forum/answer/${discussionId}`, {
+		fetch(`/api/forum/answer/${this.state.discussionId}`, {
 			method: 'POST',
 			body: formData
 		})
@@ -86,13 +81,10 @@ class ForumPage extends React.Component {
 	render() {
 		if (this.state.isNavigate) return <Navigate to="/auth/login" />;
 
-		const currentUrl = window.location.href;
-		const parts = currentUrl.split('/');
-		const discussionsId = parseInt(parts[parts.length - 2]);
 		return (
 			<div className="container">
 				<div className="header">
-					<a href={`/forum/discussions/${discussionsId}`} className="back">
+					<a href={`/forum/discussions/${this.state.discussionsId}`} className="back">
 						<img src={arrowBack} />
 					</a>
 					<h1>{this.state.header}</h1>

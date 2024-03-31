@@ -7,13 +7,12 @@ class CreateTopic extends React.Component {
 	constructor(props) {
 		const currentUrl = window.location.href;
 		const parts = currentUrl.split('/');
-		const forumId = parseInt(parts[parts.length - 1]);
 
 		super(props);
 		this.state = {
 			isNavigate: false,
 			isToReg: false,
-			forumId: forumId,
+			forumId: parseInt(parts[parts.length - 1]),
 			status: {
 				message: null,
 				statusCode: null
@@ -25,11 +24,10 @@ class CreateTopic extends React.Component {
 		if (
 			this.state.status.statusCode === 400 ||
 			this.state.status.statusCode === 500
-		) {
+		)
 			return (
 				<div className="status status-error">{this.state.status.message}</div>
 			);
-		}
 	};
 
 	sendForm = (event) => {
@@ -90,7 +88,7 @@ class CreateTopic extends React.Component {
 		return (
 			<div className="container">
 				<div className="header">
-					<a href={`/forum/${this.forumId}`} className="back">
+					<a href={`/forum/discussions/${this.state.forumId}`} className="back">
 						<img src={arrowBack} />
 					</a>
 					<h1>General Chess Discussion</h1>
