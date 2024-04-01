@@ -36,8 +36,8 @@ class Lesson extends React.Component {
 		super(props);
 		const parts = window.location.href.split('/');
 		this.state = {
+			lessonId: parseInt(parts[parts.length - 1]),
 			info: {
-				lessonId: parseInt(parts[parts.length - 1]),
 				header: null,
 				JsonDescription: []
 			}

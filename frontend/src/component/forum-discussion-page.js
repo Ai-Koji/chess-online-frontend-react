@@ -8,6 +8,7 @@ class ForumPage extends React.Component {
 		super(props);
 		const parts = window.location.href.split('/');
 		this.state = {
+			forumId: parseInt(parts[parts.length - 2]),
 			discussionId: parseInt(parts[parts.length - 1]),
 			isNavigate: false,
 			limit: 0,
@@ -84,7 +85,7 @@ class ForumPage extends React.Component {
 		return (
 			<div className="container">
 				<div className="header">
-					<a href={`/forum/discussions/${this.state.discussionsId}`} className="back">
+					<a href={`/forum/discussions/${this.state.forumId}`} className="back">
 						<img src={arrowBack} />
 					</a>
 					<h1>{this.state.header}</h1>

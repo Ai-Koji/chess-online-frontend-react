@@ -12,6 +12,7 @@ class CreateTopic extends React.Component {
 		this.state = {
 			isNavigate: false,
 			isToReg: false,
+			discussionId: null,
 			forumId: parseInt(parts[parts.length - 1]),
 			status: {
 				message: null,
@@ -43,23 +44,25 @@ class CreateTopic extends React.Component {
 			body: formData
 		})
 			.then((response) => {
-				if (response.status === 200) {
-					this.setState({
-						isNavigate: true
-					});
-				} else if (response.status === 400) {
+				if (response.status === 200)
+					response.json().then((result) => {
+						this.setState({
+							isNavigate: true,
+							discussionId: result.result[0].discussionId
+					});})
+				else if (response.status === 400)
 					this.setState({
 						status: {
 							message: 'Заполните пропущенное поле',
 							statusCode: 400
 						}
 					});
-				} else if (response.status === 403) {
+				else if (response.status === 403)
 					this.setState({
 						isNavigate: true,
 						isToReg: true
 					});
-				} else if (response.status === 500) {
+				else if (response.status === 500)
 					this.setState({
 						status: {
 							message:
@@ -67,7 +70,6 @@ class CreateTopic extends React.Component {
 							statusCode: 500
 						}
 					});
-				}
 			})
 			.catch((error) => {
 				this.setState({
@@ -82,7 +84,7 @@ class CreateTopic extends React.Component {
 	render() {
 		let url = this.state.isToReg
 			? '/auth/login'
-			: `/forum/discussion/${this.state.forumId}`;
+			: `/forum/discussion/${this.state.discussionId}`;
 		if (this.state.isNavigate) return <Navigate to={url} />;
 
 		return (
