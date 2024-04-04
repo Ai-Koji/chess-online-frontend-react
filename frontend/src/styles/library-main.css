@@ -26,7 +26,7 @@
 	width: 98%;
 	margin: 0 auto;
 	margin-top: 30px;
-	background-color: #333;
+	background-color: #191919;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
@@ -34,7 +34,7 @@
 .content-block {
 	padding: 1.5%;
 	width: 95%;
-	background-color: rgb(102, 102, 102);
+	background-color: rgb(34, 34, 34);
 	border-radius: 20px;
 	margin: 0 auto;
 	margin-bottom: 20px;
@@ -50,7 +50,7 @@
 	border-radius: 10px;
 	margin: 10px;
 	display: inline-block;
-	background-color: rgb(189, 189, 189);
+	background-color: rgb(179, 179, 179);
 	color: rgb(34, 34, 34);
 	transition: all 0.25s ease-in-out;
     text-align: left;
