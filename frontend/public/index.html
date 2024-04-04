@@ -15,6 +15,9 @@
 	</head>
 
 	<body>
+		<div class="preloader-wrapper">
+			<div class="spinner"></div>
+		</div>
 		<header>
 			<div class="container">
 				<div class="logo">
@@ -41,6 +44,18 @@
 	</body>
 </html>
 <script>
+	window.addEventListener('load', function () {
+		let preloader = document.querySelector('.preloader-wrapper');
+		let spinner = document.querySelector('.spinner');
+
+		preloader.classList.add('preloader-hide');
+		setTimeout(function () {
+			preloader.style = 'display: none';
+		}, 800);
+	});
+</script>
+<script>
+	// check login
 	fetch('/api/auth/islogin')
 		.then((response) => {
 			if (response.status == 200) return response.json();
