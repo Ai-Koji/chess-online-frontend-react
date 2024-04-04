@@ -68,7 +68,7 @@ class Library extends React.Component {
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">
 					<h1>Шахматная Библия</h1>
-					<input placeholder="Поиск" className="search-input" />
+					{/* <input placeholder="Поиск" className="search-input" /> */}
 				</div>
 				<div className="content">{this.BookBlocks()}</div>
 			</div>

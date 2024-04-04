@@ -68,7 +68,7 @@ class ForumPage extends React.Component {
 					this.state.limit += 10;
 					this.answers();
 				}
-				if (response.status === 403) this.setState({isNavigate: true})
+				if (response.status === 403) this.setState({isNavigate: true});
 			})
 			.catch((error) => {
 				console.log(error);

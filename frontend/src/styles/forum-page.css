@@ -87,6 +87,30 @@ textarea {
     unicode-bidi: plaintext;
     font: inherit;
     color-scheme: dark;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+textarea:hover {
+    border-color: #999;
+}
+
+textarea::placeholder {
+    color: #999;
+}
+
+textarea:focus::placeholder {
+    color: transparent;
+}
+
+textarea:hover::placeholder {
+    color: #ccc;
 }
 
 form {

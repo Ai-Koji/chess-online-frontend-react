@@ -73,8 +73,9 @@ h1 {
     color: rgb(225, 225, 225)
 }
 
-.debut-item h2 {
+.debut-item h6 {
     margin: 5px 0;
+    margin-top: 0;
 }
 
 .debut-item:hover {
@@ -86,6 +87,10 @@ h1 {
 
 .debut-board {
     width: 100%;
+    cursor: pointer;
+}
+.debut-board *{
+    cursor: pointer;
 }
 
 @media (max-width: 1024px) {

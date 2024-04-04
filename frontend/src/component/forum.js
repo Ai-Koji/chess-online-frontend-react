@@ -44,7 +44,7 @@ class Forum extends React.Component {
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">
 					<h1>cheeeeeess forum</h1>
-					<input placeholder="Поиск" className="search-input" />
+					{/* <input placeholder="Поиск" className="search-input" /> */}
 				</div>
 				<table className="categories">
 					<thead>

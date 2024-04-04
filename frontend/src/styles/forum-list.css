@@ -46,11 +46,21 @@ thead {
     width: 60%;
 }
 
+tr {
+    transition: all 0.3s ease-in-out;
+}
+
+tr:hover {
+    background-color: rgb(60, 60, 60);
+}
+
 .count {
     width: 10%;
 }
 
 tbody a {
+    height: 100%;
+    width: 100%;    
     color: rgb(42, 128, 194);
 }
 

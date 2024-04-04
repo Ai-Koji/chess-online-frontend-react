@@ -19,7 +19,7 @@ class DebutBase extends React.Component {
 					body.push(
 						<li className="debut-item">
 							<a href={`/debuts/debut/${result[index].id}`}>
-								<h2>{result[index].header}</h2>
+								<h6>{result[index].header}</h6>
 								<div className="debut-board">
 									<Chessboard position={result[index].mainFEN} />
 								</div>

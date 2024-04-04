@@ -42,11 +42,19 @@ tbody a {
     color: rgb(42, 128, 194);
 }
 
+tr {
+    transition: all 0.3s ease-in-out;
+}
+
+tr:hover {
+    background-color: rgb(60, 60, 60);
+}
+
 .subject {
     width: 40%;
 }
 
-.categories tbody td{
+ tbody td{
     padding: 15px;
 }
 
