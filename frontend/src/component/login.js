@@ -91,6 +91,8 @@ class Login extends React.Component {
 	};
 
 	render() {
+		document.title = "Авторизация";
+
 		if (this.state.isNavigate) return <Navigate to="/board" />;
 
 		return (

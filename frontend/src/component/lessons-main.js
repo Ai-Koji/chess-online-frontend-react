@@ -79,6 +79,8 @@ class Lessons extends React.Component {
 	}
 
 	render() {
+		document.title = "Для начинающих";
+
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">

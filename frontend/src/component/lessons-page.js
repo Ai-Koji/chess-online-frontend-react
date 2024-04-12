@@ -122,6 +122,8 @@ class Lesson extends React.Component {
 	}
 
 	render() {
+		document.title = this.state.info.header;
+
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<h1>{this.state.info.header}</h1>

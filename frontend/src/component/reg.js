@@ -90,6 +90,8 @@ class Reg extends React.Component {
 	};
 
 	render() {
+		document.title = "Регистрация";
+
 		if (this.state.isNavigate) return <Navigate to="/board" />;
 
 		return (

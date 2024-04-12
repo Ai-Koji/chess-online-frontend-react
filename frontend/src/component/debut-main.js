@@ -37,6 +37,8 @@ class DebutBase extends React.Component {
 	}
 
 	render() {
+		document.title = "Дебюты";
+
 		return (
 			<div className="container">
 				<section className="debut-list">

@@ -64,6 +64,8 @@ class Library extends React.Component {
 	}
 
 	render() {
+		document.title = "Шахматная библиотека";
+
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">

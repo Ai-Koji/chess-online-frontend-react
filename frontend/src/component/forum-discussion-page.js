@@ -80,6 +80,8 @@ class ForumPage extends React.Component {
 	}
 
 	render() {
+		document.title = this.state.header;
+
 		if (this.state.isNavigate) return <Navigate to="/auth/login" />;
 
 		return (

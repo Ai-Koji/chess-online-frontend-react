@@ -65,6 +65,8 @@ class Book extends React.Component {
 	};
 
 	render() {
+		document.title = this.state.bookInfo.title;
+
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<div className="content">

@@ -82,6 +82,8 @@ class CreateTopic extends React.Component {
 	};
 
 	render() {
+		document.title = "Новое обсуждение";
+
 		let url = this.state.isToReg
 			? '/auth/login'
 			: `/forum/discussion/${this.state.discussionId}`;

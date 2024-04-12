@@ -40,6 +40,8 @@ class Forum extends React.Component {
 	}
 
 	render() {
+		document.title = "Темы обсуждений";
+
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">

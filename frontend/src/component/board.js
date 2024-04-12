@@ -235,6 +235,8 @@ class Board extends React.Component {
 	}
 		
 	render() {
+		document.title = "Доска";
+
 		return (
 			<section className="container" style={{ display: 'block' }}>
 				<section className="board-name">

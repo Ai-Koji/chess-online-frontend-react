@@ -44,6 +44,8 @@ class ForumDiscussions extends React.Component {
 	}
 
 	render() {
+		document.title = this.state.header;
+
 		return (
 			<div className="container" style={{ display: 'block' }}>
 				<div className="header">
