@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/forum-create-discussion.css';
 import { Navigate } from 'react-router-dom';
-import arrowBack from '../images/arrow-back.svg';
+import arrowBack from '../media/arrow-back.svg';
 
 class CreateTopic extends React.Component {
 	constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import arrowBack from '../images/arrow-back.svg';
+import arrowBack from '../media/arrow-back.svg';
 import '../styles/forum-page.css';
 import { Navigate } from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/forum-discussions.css';
-import arrowBack from '../images/arrow-back.svg';
+import arrowBack from '../media/arrow-back.svg';
 
 class ForumDiscussions extends React.Component {
 	constructor(props) {
