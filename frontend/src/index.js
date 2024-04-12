@@ -6,18 +6,18 @@ import "./styles/main.css";
 
 
 const Board = lazy(() => import("./component/board"));
-const DebutBase = lazy(() => import("./component/debuts"));
-const Debut = lazy(() => import("./component/debut"));
-const Forum = lazy(() => import("./component/forum"));
+const DebutBase = lazy(() => import("./component/debut-main.js"));
+const Debut = lazy(() => import("./component/debut-page.js"));
+const Forum = lazy(() => import("./component/forum-main.js"));
 const ForumDiscussions = lazy(() => import("./component/forum-discussions"));
 const ForumPage = lazy(() => import("./component/forum-discussion-page"));
 const Login = lazy(() => import("./component/login"));
 const Reg = lazy(() => import("./component/reg"));
 const CreateTopic = lazy(() => import("./component/forum-create-discussion"));
-const Library = lazy(() => import("./component/library"));
-const Book = lazy(() => import("./component/book"));
-const Lessons = lazy(() => import("./component/lessons"));
-const Lesson = lazy(() => import("./component/lesson"));
+const Library = lazy(() => import("./component/library-main.js"));
+const Book = lazy(() => import("./component/library-book.js"));
+const Lessons = lazy(() => import("./component/lessons-main.js"));
+const Lesson = lazy(() => import("./component/lessons-page.js"));
 
 const App = () => (
   <Routes>

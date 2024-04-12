@@ -126,9 +126,9 @@ class Lesson extends React.Component {
 			<div className="container" style={{ display: 'block' }}>
 				<h1>{this.state.info.header}</h1>
 				<div className="grid-container">
-					<section className="board chessboard">
+					<div className="board chessboard">
 						<Chessboard position={this.state.fen} />
-					</section>
+					</div>
 					<section className="about-game">
 						<div className="game">
 							<this.Description />

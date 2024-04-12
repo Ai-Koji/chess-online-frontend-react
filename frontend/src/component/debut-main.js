@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/debut-base.css';
+import '../styles/debut-main.css';
 import { Chessboard } from 'react-chessboard';
 
 class DebutBase extends React.Component {
@@ -38,14 +38,14 @@ class DebutBase extends React.Component {
 
 	render() {
 		return (
-			<section className="container">
+			<div className="container">
 				<section className="debut-list">
 					<h1>Список дебютов</h1>
 					<ul id="debut-items" className="debut-grid">
 						{this.state.debutsList}
 					</ul>
 				</section>
-			</section>
+			</div>
 		);
 	}
 }

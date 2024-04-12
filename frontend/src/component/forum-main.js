@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/forum.css';
+import '../styles/forum-main.css';
 
 class Forum extends React.Component {
 	constructor(props) {
