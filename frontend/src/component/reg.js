@@ -31,7 +31,7 @@ class Reg extends React.Component {
 		const form = document.getElementById('form');
 		let formData = new FormData(form);
 
-		fetch('http://127.0.0.1:3000/api/auth/register', {
+		fetch('/api/auth/register', {
 			method: 'POST',
 			body: formData
 		})
