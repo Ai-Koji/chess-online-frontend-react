@@ -8,6 +8,11 @@ body {
 	color: rgb(205, 205, 205);
 	padding: 0;
 	font-family: Arial, sans-serif;
+	overflow: hidden;
+}
+
+button, input[type="submit"] {
+	cursor: pointer;
 }
 
 a {

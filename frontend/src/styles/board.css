@@ -45,6 +45,47 @@ textarea {
     overflow-x: hidden;
   }
 
+tfoot {
+    text-align: center;
+}
+
+.add-move {
+    width: 60%;
+    height: 40px;
+    margin-top: 15px;
+    background: none;
+    border: 2px solid rgb(150, 150, 150);
+    border-radius: 5px;
+    transition: all ease-in-out .5s;
+}
+
+.add-move:hover {
+    background: #21609b;
+    transform: scale(1.05);
+
+}
+
+.add-move img {
+    height: 100%;
+}
+
+.move img {
+    height: 100%;
+}
+
+.main-moves .move-input {
+    background: none;
+    border: none;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+}
+
+.main-moves move img{
+    height: 50%;
+}
+
 .board-name {
     width: 100%;
     margin: 0 auto;

@@ -3,7 +3,8 @@
 }
 
 .form {
-    width: 500px;
+    width: 80%;
+    max-width: 500px;
     display: block;
     overflow: auto;
     background-color: rgb(54, 54, 54);
