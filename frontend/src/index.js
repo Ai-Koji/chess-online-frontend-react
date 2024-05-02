@@ -21,7 +21,7 @@ const Lesson = lazy(() => import("./component/lessons-page.js"));
 
 const App = () => (
   <Routes>
-    <Route path="/board" element={<Board />} /> {}
+    <Route path="/board/*" element={<Board />} /> {}
     <Route path="/beginner-lessons" element={<Lessons />} /> {}
     <Route path="/beginner-lessons/lesson/*" element={<Lesson />} /> {}
     <Route path="/debuts" element={<DebutBase />} /> {}

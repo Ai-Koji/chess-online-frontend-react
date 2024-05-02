@@ -103,7 +103,7 @@ class Login extends React.Component {
 						<label>Логин или электронная почта</label>
 						<input name="loginOrMail" />
 						<label>Пароль</label>
-						<input name="password" />
+						<input name="password" type='password'/>
 						<input type="submit" value="Войти" />
 					</form>
 					<div className="urls">

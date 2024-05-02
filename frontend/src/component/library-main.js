@@ -35,7 +35,7 @@ class Library extends React.Component {
 			books.push(
 				<a className="book" href={`/library/book/${this.state.books[blockIndex].bookList[index].id}`} key={index}>
 					<img
-						src={this.state.books[blockIndex].bookList[index].imageUrl}
+						src={`/static/media/library/${this.state.books[blockIndex].bookList[index].imageUrl}`}
 						alt=""
 					/>
 					<div className="name-and-author">

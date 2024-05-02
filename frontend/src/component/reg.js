@@ -50,6 +50,14 @@ class Reg extends React.Component {
 								}
 							});
 							break;
+						case 'easy password':
+							this.setState({
+								status: {
+									message: 'Пароль слишком легкий. Пароль должен содержать хотя бы: 1 строчную и заглавую букву, 1 цифру, 1 спец символов, 8 символов',
+									statusCode: 400
+								}
+							});
+							break;
 						case 'login is already in use':
 							this.setState({
 								status: {
@@ -102,9 +110,9 @@ class Reg extends React.Component {
 						<label>Логин</label>
 						<input name="login" />
 						<label>Пароль</label>
-						<input name="password" />
+						<input name="password" type='password' />
 						<label>Электронная почта</label>
-						<input name="email" />
+						<input name="email" type='email' />
 						<input type="submit" value="зарегистрироваться" />
 					</form>
 					<div className="urls">

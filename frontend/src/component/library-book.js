@@ -37,9 +37,8 @@ class Book extends React.Component {
 
 		if (json) {
 			json = JSON.parse(json);
-			for (let index = 0; index < json.length; index++) {
+			for (let index = 0; index < json.length; index++)
 				body.push(<a href={json[index].url}>{json[index].title}</a>);
-			}
 		}
 
 		return body;
@@ -48,16 +47,13 @@ class Book extends React.Component {
 	readPdf = () => {
 		if (this.state.bookInfo.pdfUrl) {
 			return (
-				<a className="read-pdf" href={this.state.bookInfo.pdfUrl} alt="">
+				<a className="read-pdf" href={`/static/media/books/${this.state.bookInfo.pdfUrl}`} alt="">
 					Читать
 				</a>
 			);
 		} else {
 			return (
-				<a
-					className="read-pdf cant-read"
-					alt="защищено авторским правом/отсутствует"
-				>
+				<a className="read-pdf cant-read" alt="защищено авторским правом/отсутствует">
 					Недоступно
 				</a>
 			);
@@ -71,7 +67,7 @@ class Book extends React.Component {
 			<div className="container" style={{ display: 'block' }}>
 				<div className="content">
 					<div className="image">
-						<img src={this.state.bookInfo.imageUrl} />
+						<img src={`/static/media/library/${this.state.bookInfo.imageUrl}`} />
 					</div>
 					<div className="about-book">
 						<h1>{this.state.bookInfo.title}</h1>
