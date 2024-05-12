@@ -182,44 +182,79 @@ class Board extends React.Component {
         for (let index = 0; index < JSon.length; index++) {
             switch (JSon[index].type) {
                 case 'index':
-                    this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0].content = indexOfMainMoves;
-                    body.push(<index key={index} onContextMenu={(event) => this.handleContextMenu(event, index, true, false, [indexOfBlocks, indexOfMainMoves])}>{indexOfMainMoves + 1}</index>);
-                    break;
-                case 'move':
-                    if (JSon[index].content === '' && JSon[index].fen === '' && this.state.isPreviewMode)
+                    console.log(this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0])
+
+                    if (this.state.isPreviewMode) 
                         body.push(
-                            <move key={index} onClick={() => this.addMoveCell(indexOfBlocks, indexOfMainMoves, index)}>
-                                <img src={add}/>
-                            </move>
-                        );
+                            <index key={index} onContextMenu={(event) => this.handleContextMenu(event, index, true, false, [indexOfBlocks, indexOfMainMoves])}>
+                                <input className='index-input' value={this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0].content} 
+                                onChange={(event) => this.handleIndexChange(indexOfBlocks, indexOfMainMoves, event)}/>
+                            </index>
+                            );
                     else 
                         body.push(
-                            <move key={index} onClick={() => this.loadPoss(JSon[index].fen)} onContextMenu={(event) => this.handleContextMenu(event, index, false, true, [indexOfBlocks, indexOfMainMoves, index])}>
-                                <input value={JSon[index].content} className="move-input" onChange={(event) => this.handleMoveChange(indexOfBlocks, indexOfMainMoves, index, event)}/>
-                            </move>
-                        );
+                            <index key={index} onContextMenu={(event) => this.handleContextMenu(event, index, true, false, [indexOfBlocks, indexOfMainMoves])}>
+                                {this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0].content}
+                            </index>
+                            );
+                    break;
+                case 'move':
+                    if (JSon[index].content === '' && JSon[index].fen === '' && this.state.isPreviewMode){
+                        if (!this.state.isPreviewMode) 
+                            body.push(
+                                <move key={index} onClick={() => this.loadPoss(JSon[index].fen)}>
+                                   {JSon[index].content}
+                                </move>
+                            );
+                        else 
+                            body.push(
+                                <move key={index} onClick={() => this.addMoveCell(indexOfBlocks, indexOfMainMoves, index)}>
+                                    <img src={add}/>
+                                </move>
+                            );
+                    }
+                    else {
+                        if (!this.state.isPreviewMode) 
+                            body.push(
+                                <move key={index} onClick={() => this.loadPoss(JSon[index].fen)}>
+                                   {JSon[index].content}
+                                </move>
+                            );
+                        else 
+                            body.push(
+                                <move key={index} onClick={() => this.loadPoss(JSon[index].fen)} onContextMenu={(event) => this.handleContextMenu(event, index, false, true, [indexOfBlocks, indexOfMainMoves, index])}>
+                                    <input value={JSon[index].content} className="move-input" onChange={(event) => this.handleMoveChange(indexOfBlocks, indexOfMainMoves, index, event)}/>
+                                </move>
+                            );
+                    }
                     break;
                 case 'tr':
                     body.push(<tr key={index}>{this.fromJsonToJSX(JSon[index].content, indexOfBlocks, index)}</tr>);
                     this.state.trIndex++;
                     break;
                 case 'description':
-                    body.push(
-                        <div key={index} className="description" >
-                            <textarea rows="6" value={JSon[index].content} onContextMenu={(event) => this.handleContextMenu(event, index)} onChange={(event) => this.handleTextChange(index, event)} />
-                        </div>
-                    );
+                    if (!this.state.isPreviewMode) 
+                        body.push(
+                            <div key={index} className="description" >
+                                {JSon[index].content}
+                            </div>
+                        );
+                    else 
+                        body.push(
+                            <div key={index} className="description" >
+                                <textarea rows="6" value={JSon[index].content} onContextMenu={(event) => this.handleContextMenu(event, index)} onChange={(event) => this.handleTextChange(index, event)} />
+                            </div>
+                        );
                     break;
                 case 'main-moves':
                     let tbody = this.fromJsonToJSX(JSon[index].content, index);
-                    let moveIndex = this.state.trIndex;
                     
                     if (this.state.isPreviewMode)
                         body.push(
                             <table key={index} className="main-moves">
                                 <tbody>{tbody}</tbody>
                                 <tfoot>
-                                    <button className='add-move' onClick={() => this.addMove(index, moveIndex)} onContextMenu={(event) => this.handleContextMenu(event, index)}>
+                                    <button className='add-move' onClick={() => this.addMove(index, 0)} onContextMenu={(event) => this.handleContextMenu(event, index)}>
                                         <img src={add} />
                                     </button>
                                 </tfoot>
@@ -260,6 +295,12 @@ class Board extends React.Component {
 
     };
 
+    handleIndexChange = (blockIndex, trIndex, event) => {
+        const updatedJsonDescription = this.state.JsonDescription;
+        updatedJsonDescription[blockIndex].content[trIndex].content[0].content = event.target.value;
+        this.setState({ JsonDescription: updatedJsonDescription });
+    };
+
     // Метод для обработки изменений в полях ходов
     handleMoveChange = (blockIndex, trIndex, moveIndex, event) => {
         const updatedJsonDescription = this.state.JsonDescription;
@@ -286,7 +327,7 @@ class Board extends React.Component {
         const newMoveSet = {
             type: 'tr',
             content: [
-                { type: 'index', content: `${moveIndex}.` },
+                { type: 'index', content: `${moveIndex}` },
                 { type: 'move', fen: '', content: '' },
                 { type: 'move', fen: '', content: '' }
             ]
@@ -302,11 +343,6 @@ class Board extends React.Component {
         updatedJsonDescription[blockIndex].content[trIndex].content[moveIndex].fen = this.state.fen;
         this.setState({ JsonDescription: updatedJsonDescription });
     };
-
-    // открыть или скрыть партию(кнопка)
-    closeOpen = () => {
-        this.state.isOpen = !this.state.isOpen;
-    }
 
     // Метод для очистки доски
     clearBoard = () => {
@@ -426,7 +462,7 @@ class Board extends React.Component {
                         <div className="game-buttons">
                             <button onClick={this.addDescriptionBlock} style={{display: !this.state.isAuthor ? "none" : ""}} >TXT</button>
                             <button onClick={this.addMainMovesBlock} style={{display: !this.state.isAuthor ? "none" : ""}} >Moves</button>
-                            <button onClick={() => {this.setState({isPreviewMode: !this.state.isPreviewMode})}} style={{display: !this.state.isAuthor ? "none" : ""}} >Preview</button>
+                            <button onClick={() => {this.setState({isPreviewMode: !this.state.isPreviewMode})}} style={{display: !this.state.isAuthor ? "none" : ""}} className={!this.state.isPreviewMode ? "game-button-active": ""} >Preview</button>
                         </div>
                     </div>
                 </div>
@@ -436,8 +472,8 @@ class Board extends React.Component {
                     <button id="clear-board" onClick={this.clearBoard}>
                         Очистить доску
                     </button>
-                    <button id="open-close-for-share" onClick={this.closeOpen} style={{display: !this.state.isAuthor ? "none" : ""}} >
-                        Скрыть от всех/Открыть для всех
+                    <button id="open-close-for-share" onClick={() => {this.setState({isOpen: !this.state.isOpen})}} className={this.state.isOpen ? "button-active": ""} style={{display: !this.state.isAuthor ? "none" : ""}} >
+                        {this.state.isOpen ? "Скрыть от всех" : "Открыть для всех"}
                     </button>
                 </section>
                 <section className="save">

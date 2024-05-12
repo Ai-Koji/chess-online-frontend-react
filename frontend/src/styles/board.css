@@ -23,16 +23,22 @@ main {
     transition: all ease-in-out 0.5s;
 }
 
+.game-button-active {
+    background-color: #7b7b7b !important;
+}
+
 .game-buttons button:hover {
     background-color: #7b7b7b;
 }
 
 .description {
+    width: 95%; 
+    min-height: 50px;
     padding: 0;
 }
 
 textarea {
-    width: 95%; 
+    width: 100%; 
     height: auto;
     background: none;
     border: none;
@@ -70,6 +76,15 @@ tfoot {
 
 .move img {
     height: 100%;
+}
+
+.main-moves .index-input {
+    background: none;
+    border: none;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 16px;
 }
 
 .main-moves .move-input {
@@ -145,6 +160,11 @@ tfoot {
     background-color: #fff;
     color: #1c1b18;
     box-shadow: 0 0 20px rgba(255, 68, 0, 0.6);
+}
+
+.button-active {
+    background-color: #fff !important;
+    color: #1c1b18 !important;
 }
 
 .options button:active {
