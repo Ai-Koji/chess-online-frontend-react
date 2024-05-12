@@ -6,10 +6,7 @@ import { Chessboard } from 'react-chessboard';
 // пример JsonDescription:
 	// {
 	// 	type: 'description',
-	// 	content: [
-	// 		{ type: 'text', content: 'just text' },
-	// 		{ type: 'text', content: 'just text2' }
-	// 	]
+	// 	content: "текст"
 	// },
 	// {
 	// 	type: 'main-moves',
@@ -48,6 +45,7 @@ class Lesson extends React.Component {
 		fetch(`/api/debuts/debut/${this.state.debutId}`)
 			.then((response) => response.json())
 			.then((result) => {
+				console.log(result)
 				this.setState({info: {
 					JsonDescription: JSON.parse(result[0].game),
 					header:  result[0].header
@@ -62,6 +60,7 @@ class Lesson extends React.Component {
 		let body = [];
 
 		for (let index = 0; index < JSon.length; index++) {
+			console.log(JSon[index])
 			switch (JSon[index].type) {
 				case 'index':
 					body.push(<index key={index}>{JSon[index].content}</index>);
@@ -79,12 +78,9 @@ class Lesson extends React.Component {
 				case 'description':
 					body.push(
 						<div key={index} className="description">
-							{this.fromJsonToJSX(JSon[index].content)}
+							{JSon[index].content}
 						</div>
 					);
-					break;
-				case 'text':
-					body.push(<p key={index}>{JSon[index].content}</p>);
 					break;
 				case 'main-moves':
 					body.push(

@@ -6,10 +6,7 @@ import { Chessboard } from 'react-chessboard';
 // пример JsonDescription:
 	// {
 	// 	type: 'description',
-	// 	content: [
-	// 		{ type: 'text', content: 'just text' },
-	// 		{ type: 'text', content: 'just text2' }
-	// 	]
+	// 	content: "текст"
 	// },
 	// {
 	// 	type: 'main-moves',
@@ -19,7 +16,7 @@ import { Chessboard } from 'react-chessboard';
 	// 			{ type: 'index', content: '1.' },
 	// 			{ type: 'move', fen: 'r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 1 6', content: 'e4' },
 	// 			{ type: 'move', fen: '', content: 'e4' },
-	// 		]
+	// 		]x
 	// 	}]
 	// },
 	// {
@@ -79,12 +76,9 @@ class Lesson extends React.Component {
 				case 'description':
 					body.push(
 						<div key={index} className="description">
-							{this.fromJsonToJSX(JSon[index].content)}
+							{JSon[index].content}
 						</div>
 					);
-					break;
-				case 'text':
-					body.push(<p key={index}>{JSon[index].content}</p>);
 					break;
 				case 'main-moves':
 					body.push(
