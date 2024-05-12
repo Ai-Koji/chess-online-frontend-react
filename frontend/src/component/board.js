@@ -3,7 +3,7 @@ import '../styles/chessboard.css';
 import '../styles/board.css';
 import add from '../media/add.svg';
 import { Chessboard } from 'react-chessboard';
-
+import close from '../media/close.svg';
 class Board extends React.Component {
     constructor(props) {
         super(props);
@@ -12,6 +12,10 @@ class Board extends React.Component {
             history: [],
             isNotGetted: true,
             prevFen: null,
+            statusIsOpen: false,
+            statusIsError: null,
+            statusMessage: "",
+            isAuthor: true,
             boardId: () => {
                 if (parts[parts.length - 1] != "board")
                     return parseInt(parts[parts.length - 1]);
@@ -28,20 +32,22 @@ class Board extends React.Component {
         };
     }
 
-    closeOpen = () => {
-        this.state.isOpen = !this.state.isOpen;
+    closeStatus = () => {
+        this.setState({
+            statusIsOpen: false
+        })
     }
 
     saveGame = () => {
         let formData = {
-            id: this.state.boardId,
+            id: this.state.boardId(),
             header: this.state.header,
             mainFen: this.state.fen,
             game: JSON.stringify(this.state.JsonDescription),
             isOpen: this.state.isOpen
         };
 
-		fetch(`/api/board/update-add/${this.state.boardId()}`, {
+		fetch(`/api/board/update-add/${this.state.isAuthor ? this.state.boardId(): 0}`, {
 			method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,10 +55,37 @@ class Board extends React.Component {
             body: JSON.stringify(formData)
 		})
         .then((response) => {
-            console.log(response);
+            if (response.status == 200) {
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: false,
+                    statusMessage: "Партия сохранена."
+                })
+            }
+            else if (response.status == 403) {
+                console.log(response.status, "not auth");
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: true,
+                    statusMessage: "Вы не авторизованы."
+                })
+            }
+            else if (response.status == 500) {
+                console.log(response.status);
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: true,
+                    statusMessage: "Произошла какая-то ошибка, попробуйте позже."
+                })
+            }
         })
         .catch((error) => {
             console.log(error);
+            this.setState({
+                statusIsOpen: true,
+                statusIsError: true,
+                statusMessage: "Произошла какая-то ошибка, попробуйте позже."
+            })
         });
     }
 
@@ -62,41 +95,79 @@ class Board extends React.Component {
 		})
         .then((response) => response.json())
         .then ((response) => {
-            this.setState({
-                id: response.game.id,
-                header: response.game.header,
-                fen: response.game.mainFen,
-                JsonDescription: JSON.parse(response.game.game),
-                isOpen: response.game.is_open,    
-                savedGames: response.savedGames,
-                isNotGetted: false
-            });
-        })
+            if (response.game != []){
+                let JsonDescription;
+                
+                try {
+                    JsonDescription = JSON.parse(response.game.game)
+                } catch {
+                    JsonDescription = []
+                }
+
+                this.setState({
+                    id: response.game.id,
+                    header: response.game.header,
+                    fen: response.game.mainFen ? response.game.mainFen : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+                    JsonDescription: JsonDescription,
+                    isOpen: response.game.is_open,    
+                    savedGames: response.savedGames,
+                    isAuthor: response.isAuthor,
+                    isNotGetted: false
+                });}
+            else if (this.state.boardId() != 0) 
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: true,
+                    statusMessage: "Автор запретил показывать эту партию.",
+                    savedGames: response.savedGames
+                })
+            else
+                this.setState({
+                    savedGames: response.savedGames
+                })
+        }
+        )
         .catch((error) => {
             console.log(error);
+            this.setState({
+                statusIsOpen: true,
+                statusIsError: true,
+                statusMessage: "Произошла какая-то ошибка, попробуйте позже."
+            })
         });
     }
 
-    // Метод для очистки доски
-    clearBoard = () => {
-        this.setState({
-            prevFen: null,
-            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-        });
-    };
-
     deleteGame = () => {
-		fetch(`/api/board/${this.state.boardId()}`, {
+		fetch(`/api/board/delete/${this.state.boardId()}`, {
 			method: 'DELETE'
 		})
         .then((response) => {
             if (response.status == 200)
                 document.location.href = "/board/"; // перевод на другую страницу
-            else 
+            else if (response.status == 404 || response.status == 500){
                 console.log(response.status)
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: true,
+                    statusMessage: "Произошла какая-то ошибка, попробуйте позже."
+                })
+            }
+            else if (response.status == 400){
+                console.log(response.status)
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: true,
+                    statusMessage: "Вы пытаетесь удалить партию, которая не сохранена. Попробуйте перезагрузить страницу."
+                })
+            }
         })
         .catch ((error) => {
-            console.log(error)
+                console.log(error);
+                this.setState({
+                    statusIsOpen: true,
+                    statusIsError: true,
+                    statusMessage: "Произошла какая-то ошибка, попробуйте позже."
+                })
         })
     }
 
@@ -232,6 +303,19 @@ class Board extends React.Component {
         this.setState({ JsonDescription: updatedJsonDescription });
     };
 
+    // открыть или скрыть партию(кнопка)
+    closeOpen = () => {
+        this.state.isOpen = !this.state.isOpen;
+    }
+
+    // Метод для очистки доски
+    clearBoard = () => {
+        this.setState({
+            prevFen: null,
+            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+        });
+    };
+
     // Метод для преобразования позиции на доске в ФЕН
     positionsToFen = (positions) => {
         // Получаем ФЕН на основе позиции
@@ -294,6 +378,7 @@ class Board extends React.Component {
         }
     };
 
+    // список сохраненных партий
     GamesList() {
         let savedGames = this.state.savedGames;
         let elements = [];
@@ -301,7 +386,7 @@ class Board extends React.Component {
         for (let index = 0; index < savedGames.length - 2; index++) {
             elements.push(
                 <li className="save-item" key={index}>
-                    <a href={savedGames[index].id}>
+                    <a href={`/board/${savedGames[index].id}`}>
                         <h2>{savedGames[index].header}</h2>
                         <div className="save-board">
                             <Chessboard position={savedGames[index].mainFen ? savedGames[index].mainFen : "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"} />
@@ -321,7 +406,8 @@ class Board extends React.Component {
 
     render() {
         document.title = "Доска";
-        
+        console.log(this.state.JsonDescription)
+
         return (
             <div className="container" style={{ display: 'block' }}>
                 <section className="board-name">
@@ -338,19 +424,19 @@ class Board extends React.Component {
                             <this.Description />
                         </div>
                         <div className="game-buttons">
-                            <button onClick={this.addDescriptionBlock}>TXT</button>
-                            <button onClick={this.addMainMovesBlock}>Moves</button>
-                            <button onClick={() => {this.setState({isPreviewMode: !this.state.isPreviewMode})}}>Preview</button>
+                            <button onClick={this.addDescriptionBlock} style={{display: !this.state.isAuthor ? "none" : ""}} >TXT</button>
+                            <button onClick={this.addMainMovesBlock} style={{display: !this.state.isAuthor ? "none" : ""}} >Moves</button>
+                            <button onClick={() => {this.setState({isPreviewMode: !this.state.isPreviewMode})}} style={{display: !this.state.isAuthor ? "none" : ""}} >Preview</button>
                         </div>
                     </div>
                 </div>
                 <section className="options">
-                    <button id="delete-game" onClick={this.deleteGame}>Удалить</button>
+                    <button id="delete-game" onClick={this.deleteGame} style={{display: !this.state.isAuthor ? "none" : ""}}>Удалить</button>
                     <button id="save-game" onClick={this.saveGame}>Сохранить</button>
                     <button id="clear-board" onClick={this.clearBoard}>
                         Очистить доску
                     </button>
-                    <button id="open-close-for-share" onClick={this.closeOpen}>
+                    <button id="open-close-for-share" onClick={this.closeOpen} style={{display: !this.state.isAuthor ? "none" : ""}} >
                         Скрыть от всех/Открыть для всех
                     </button>
                 </section>
@@ -358,6 +444,16 @@ class Board extends React.Component {
                     <h1>Сохраненные партии</h1>
                     <ul className="save-grid">{this.GamesList()}</ul>
                 </section>
+                <div className={this.state.statusIsError ? "status status_error" : this.state.statusIsError != null ? "status status_succesfull" : ""} style={{ display: !this.state.statusIsOpen ? "none" : "" }}>
+                    <div className='status__output'> 
+                        <output>
+                            {this.state.statusMessage}
+                        </output>
+                    </div>
+                    <button onClick={this.closeStatus} className="status_close-button">
+                        <img src={close} />
+                    </button>                    
+                </div>
             </div>
         );
     }
