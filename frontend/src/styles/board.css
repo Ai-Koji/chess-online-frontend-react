@@ -27,27 +27,32 @@ main {
     background-color: #7b7b7b !important;
 }
 
+.game-button-active-delete {
+    background-color: rgb(166, 1, 1) !important; 
+}
+
 .game-buttons button:hover {
     background-color: #7b7b7b;
 }
 
 .description {
-    width: 95%; 
     min-height: 50px;
-    padding: 0;
+    font-size: 15px;
+    color: white; 
 }
 
 textarea {
-    width: 100%; 
+    width: 99%; 
     height: auto;
     background: none;
     border: none;
-    color: white; 
-    font-size: 15px;
-    padding: 10px;
     resize: vertical; 
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: white; 
   }
 
 tfoot {
@@ -103,7 +108,7 @@ tfoot {
 .board-name {
     width: 100%;
     margin: 0 auto;
-    padding: 20px 20px;
+    /* padding: 20px 20px; */
 }
 
 .chess-game {
@@ -119,7 +124,7 @@ tfoot {
 }
 
 .board-name input {
-    width: 100%;
+    width: 90%;
     padding: 20px;
     border: none;
     background: none;
@@ -172,7 +177,7 @@ tfoot {
     top: 1px;
 }
 
-.save h1 {
+.save h1 { 
     font-size: 25pt;
     margin-bottom: 20px;
 }
