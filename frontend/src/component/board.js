@@ -16,6 +16,7 @@ class Board extends React.Component {
             statusIsError: null,
             statusMessage: "",
             isAuthor: true,
+            isDeleteMode: false,
             boardId: () => {
                 if (parts[parts.length - 1] != "board")
                     return parseInt(parts[parts.length - 1]);
@@ -46,38 +47,46 @@ class Board extends React.Component {
             game: JSON.stringify(this.state.JsonDescription),
             isOpen: this.state.isOpen
         };
-
-		fetch(`/api/board/update-add/${this.state.isAuthor ? this.state.boardId(): 0}`, {
-			method: 'POST',
+    
+        fetch(`/api/board/update-add/${this.state.isAuthor ? this.state.boardId() : 0}`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData)
-		})
+        })
         .then((response) => {
-            if (response.status == 200) {
-                this.setState({
-                    statusIsOpen: true,
-                    statusIsError: false,
-                    statusMessage: "Партия сохранена."
-                })
-            }
-            else if (response.status == 403) {
+            if (response.status === 200) {
+                return response.json();  // Парсим ответ как JSON
+            } else if (response.status === 403) {
                 console.log(response.status, "not auth");
                 this.setState({
                     statusIsOpen: true,
                     statusIsError: true,
                     statusMessage: "Вы не авторизованы."
-                })
-            }
-            else if (response.status == 500) {
+                });
+                throw new Error('Not authorized');
+            } else if (response.status === 500) {
                 console.log(response.status);
                 this.setState({
                     statusIsOpen: true,
                     statusIsError: true,
                     statusMessage: "Произошла какая-то ошибка, попробуйте позже."
-                })
+                });
+                throw new Error('Server error');
             }
+        })
+        .then((data) => {
+            // Если `id` существует в ответе, выводим его в консоль
+            if (data.id && (this.state.boardId() != data.id)) {
+                document.location.href = `/board/${data.id}`;
+            }
+            this.setState({
+                statusIsOpen: true,
+                statusIsError: false,
+                statusMessage: "Партия сохранена."
+            });
+            this.getInfo();
         })
         .catch((error) => {
             console.log(error);
@@ -85,8 +94,19 @@ class Board extends React.Component {
                 statusIsOpen: true,
                 statusIsError: true,
                 statusMessage: "Произошла какая-то ошибка, попробуйте позже."
-            })
+            });
         });
+    }
+    
+
+    copyUrlGame = () => {
+        navigator.clipboard.writeText(window.location.href);
+        this.setState({
+            statusIsOpen: true,
+            statusIsError: false,
+            statusMessage: "Ссылка на вашу партию была скопирована в буфер обмена"
+        })
+
     }
 
     getInfo = () => {
@@ -182,18 +202,16 @@ class Board extends React.Component {
         for (let index = 0; index < JSon.length; index++) {
             switch (JSon[index].type) {
                 case 'index':
-                    console.log(this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0])
-
                     if (this.state.isPreviewMode) 
                         body.push(
-                            <index key={index} onContextMenu={(event) => this.handleContextMenu(event, index, true, false, [indexOfBlocks, indexOfMainMoves])}>
-                                <input className='index-input' value={this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0].content} 
+                            <index key={index} onClick={this.state.isDeleteMode ? (event) => this.deleteBlock(event, index, true, false, [indexOfBlocks, indexOfMainMoves]) : ()=>{}}>
+                                <input className='index-input' type="number" value={this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0].content} 
                                 onChange={(event) => this.handleIndexChange(indexOfBlocks, indexOfMainMoves, event)}/>
                             </index>
                             );
                     else 
                         body.push(
-                            <index key={index} onContextMenu={(event) => this.handleContextMenu(event, index, true, false, [indexOfBlocks, indexOfMainMoves])}>
+                            <index key={index}>
                                 {this.state.JsonDescription[indexOfBlocks].content[indexOfMainMoves].content[0].content}
                             </index>
                             );
@@ -222,7 +240,7 @@ class Board extends React.Component {
                             );
                         else 
                             body.push(
-                                <move key={index} onClick={() => this.loadPoss(JSon[index].fen)} onContextMenu={(event) => this.handleContextMenu(event, index, false, true, [indexOfBlocks, indexOfMainMoves, index])}>
+                                <move key={index} onClick={this.state.isDeleteMode ? (event) => this.deleteBlock(event, index, false, true, [indexOfBlocks, indexOfMainMoves, index]) : () => this.loadPoss(JSon[index].fen)}>
                                     <input value={JSon[index].content} className="move-input" onChange={(event) => this.handleMoveChange(indexOfBlocks, indexOfMainMoves, index, event)}/>
                                 </move>
                             );
@@ -242,7 +260,7 @@ class Board extends React.Component {
                     else 
                         body.push(
                             <div key={index} className="description" >
-                                <textarea rows="6" value={JSon[index].content} onContextMenu={(event) => this.handleContextMenu(event, index)} onChange={(event) => this.handleTextChange(index, event)} />
+                                <textarea rows="6" value={JSon[index].content} onClick={this.state.isDeleteMode ? (event) => this.deleteBlock(event, index) : ()=>{}} onChange={(event) => this.handleTextChange(index, event)} />
                             </div>
                         );
                     break;
@@ -254,7 +272,7 @@ class Board extends React.Component {
                             <table key={index} className="main-moves">
                                 <tbody>{tbody}</tbody>
                                 <tfoot>
-                                    <button className='add-move' onClick={() => this.addMove(index, 0)} onContextMenu={(event) => this.handleContextMenu(event, index)}>
+                                    <button className='add-move' onClick={this.state.isDeleteMode ? (event) => this.deleteBlock(event, index) : () => this.addMove(index, 0)}>
                                         <img src={add} />
                                     </button>
                                 </tfoot>
@@ -392,7 +410,7 @@ class Board extends React.Component {
         this.setState({ prevFen: this.state.fen, fen: fen });
     }
 
-    handleContextMenu = (event, index, isTr, isMove, position) => {
+    deleteBlock = (event, index, isTr, isMove, position) => {
         event.preventDefault(); 
         if (isTr){
             let updatedJson = this.state.JsonDescription; 
@@ -415,11 +433,11 @@ class Board extends React.Component {
     };
 
     // список сохраненных партий
-    GamesList() {
+    GamesList = () => {
         let savedGames = this.state.savedGames;
         let elements = [];
 
-        for (let index = 0; index < savedGames.length - 2; index++) {
+        for (let index = 0; index < savedGames.length; index++) {
             elements.push(
                 <li className="save-item" key={index}>
                     <a href={`/board/${savedGames[index].id}`}>
@@ -439,10 +457,8 @@ class Board extends React.Component {
         if (this.state.isNotGetted) this.getInfo();
     }
 
-
     render() {
         document.title = "Доска";
-        console.log(this.state.JsonDescription)
 
         return (
             <div className="container" style={{ display: 'block' }}>
@@ -463,6 +479,7 @@ class Board extends React.Component {
                             <button onClick={this.addDescriptionBlock} style={{display: !this.state.isAuthor ? "none" : ""}} >TXT</button>
                             <button onClick={this.addMainMovesBlock} style={{display: !this.state.isAuthor ? "none" : ""}} >Moves</button>
                             <button onClick={() => {this.setState({isPreviewMode: !this.state.isPreviewMode})}} style={{display: !this.state.isAuthor ? "none" : ""}} className={!this.state.isPreviewMode ? "game-button-active": ""} >Preview</button>
+                            <button onClick={() => {this.setState({isDeleteMode: !this.state.isDeleteMode})}} style={{display: !this.state.isAuthor ? "none" : ""}}  className={this.state.isDeleteMode ? "game-button-active-delete": ""} >Delete</button>
                         </div>
                     </div>
                 </div>
@@ -472,13 +489,16 @@ class Board extends React.Component {
                     <button id="clear-board" onClick={this.clearBoard}>
                         Очистить доску
                     </button>
+                    <button id="copy" onClick={this.copyUrlGame}>Поделиться</button>
                     <button id="open-close-for-share" onClick={() => {this.setState({isOpen: !this.state.isOpen})}} className={this.state.isOpen ? "button-active": ""} style={{display: !this.state.isAuthor ? "none" : ""}} >
                         {this.state.isOpen ? "Скрыть от всех" : "Открыть для всех"}
                     </button>
                 </section>
                 <section className="save">
                     <h1>Сохраненные партии</h1>
-                    <ul className="save-grid">{this.GamesList()}</ul>
+                    <ul className="save-grid">
+                            <this.GamesList />
+                    </ul>
                 </section>
                 <div className={this.state.statusIsError ? "status status_error" : this.state.statusIsError != null ? "status status_succesfull" : ""} style={{ display: !this.state.statusIsOpen ? "none" : "" }}>
                     <div className='status__output'> 
