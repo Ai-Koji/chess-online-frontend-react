@@ -46,12 +46,23 @@ tr {
     transition: all 0.3s ease-in-out;
 }
 
+@media (max-width: 530px) {
+    tr th:nth-child(2), tr th:nth-child(3) {
+        display: none;
+    }
+    tr td:nth-child(2), tr td:nth-child(3) {
+        display: none;
+    }
+}
+
 tr:hover {
     background-color: rgb(60, 60, 60);
 }
 
 .subject {
-    width: 40%;
+    width: 100%;
+    max-width: 70%;
+    min-width: 315px;
 }
 
  tbody td{

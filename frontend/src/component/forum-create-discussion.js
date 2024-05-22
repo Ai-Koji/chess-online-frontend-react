@@ -95,13 +95,11 @@ class CreateTopic extends React.Component {
 					<a href={`/forum/discussions/${this.state.forumId}`} className="back">
 						<img src={arrowBack} />
 					</a>
-					<h1>General Chess Discussion</h1>
+					<h1>Создать тему обсуждение</h1>
 				</div>
 				<hr />
 				<div className="answer-form">
 					<form id="form" onSubmit={this.sendForm}>
-						<h1>Создать тему</h1>
-
 						<label>Заголовок темы</label>
 						<input name="header" type="text" />
 
