@@ -86,7 +86,7 @@ class CreateTopic extends React.Component {
 
 		let url = this.state.isToReg
 			? '/auth/login'
-			: `/forum/discussion/${this.state.discussionId}`;
+			: `/forum/discussion/${this.state.forumId}/${this.state.discussionId}`;
 		if (this.state.isNavigate) return <Navigate to={url} />;
 
 		return (

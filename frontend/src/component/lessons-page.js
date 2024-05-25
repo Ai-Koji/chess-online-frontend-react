@@ -76,7 +76,9 @@ class Lesson extends React.Component {
 				case 'description':
 					body.push(
 						<div key={index} className="description">
-							{JSon[index].content}
+							<pre>
+								{JSon[index].content}
+							</pre>
 						</div>
 					);
 					break;

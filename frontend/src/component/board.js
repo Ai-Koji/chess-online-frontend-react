@@ -254,7 +254,9 @@ class Board extends React.Component {
                     if (!this.state.isPreviewMode) 
                         body.push(
                             <div key={index} className="description" >
-                                {JSon[index].content}
+                                <pre>
+                                    {JSon[index].content}
+                                </pre>
                             </div>
                         );
                     else 
@@ -458,6 +460,11 @@ class Board extends React.Component {
     }
 
     render() {
+        console.log("fen")
+        console.log(this.state.fen)
+        console.log("desc:")
+        console.log(this.state.JsonDescription)
+
         document.title = "Доска";
 
         return (
