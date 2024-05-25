@@ -29,6 +29,7 @@
 
 .card {
     width: 350px;
+    min-height: 50px;
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
@@ -59,6 +60,7 @@
 
 .card .header {
     width: 80%;
+    height: 90%;
     display: block;
     margin: 0;
     padding: 10px;

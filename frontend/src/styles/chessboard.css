@@ -275,3 +275,8 @@ move:hover {
         grid-template-columns: repeat(1, minmax(100px, 1fr));
     }
 }
+
+
+pre {
+    white-space: pre-wrap;
+}

@@ -3,7 +3,7 @@
     margin: 0 auto;
     margin-top: 60px;
     padding: 2%;
-    display: flex;
+    display: inline-flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: start;
@@ -17,11 +17,13 @@
 }
 
 .back {
-    width: 5%;
+    width: 50px;
+    max-width: 50px;
+    height: 50px;
 }
 
 .back img {
-    width: 70%;
+    width: 100%;
 }
 
 .header h1 {
@@ -70,4 +72,26 @@ tbody td {
 
 tbody tr:nth-child(even) {
     background-color: rgb(34, 34, 34);
+}
+
+@media (max-width: 700px) {
+    .header {
+        flex: 50px 100% 100%; /* каждый элемент занимает 100% ширины */
+    }
+    .create {
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 530px) {
+    
+    tr th:nth-child(2), tr th:nth-child(3) {
+        display: none;
+    }
+    tr td:nth-child(2), tr td:nth-child(3) {
+        display: none;
+    }
 }

@@ -306,3 +306,7 @@ tfoot {
         width: 370px;
     }
 }
+
+pre {
+    white-space: pre-wrap;
+}
